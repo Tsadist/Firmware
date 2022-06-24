@@ -11,6 +11,8 @@
         raspi-gpio set 18 op dl //выключить вентилятор 
  
  3. ЧРВ
+ 
+        sudo hwclock -w
 
         sudo hwclock -r
  
