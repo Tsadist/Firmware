@@ -13,7 +13,7 @@
  3. ЧРВ
  
         sudo hwclock -w
-
+        //через 2-3 секунды
         sudo hwclock -r
  
  Если не работает:
@@ -52,11 +52,9 @@ Interface options - I2C - ON
         
         ssh pi@192.168.1.21
         
-        F^C flash13
+        sudo hwclock -w  //синх-ия часов
         
-        sudo hwclock -w  //синх-ия
-        
-        cat /proc/driver/rtc
+        cat /proc/driver/rtc  // должны появится строки rtc_time и rtc_date
         
         sudo sh -c "echo 0 > /sys/class/rtc/rtc0/wakealarm"  //очистка будильника
         
