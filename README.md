@@ -66,3 +66,8 @@ Interface options - I2C - ON
         
         sudo halt
         
+6. Преобразователь
+
+        minicom -D /dev/ttyS0
+    
+Проверяем эхо. Выход: ctrl+a +x
