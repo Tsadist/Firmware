@@ -52,6 +52,10 @@ Interface options - I2C - ON
         
         ssh pi@192.168.1.21
         
+        minicom -D /dev/ttyS0  //проверка преобразователя
+    
+Проверяем эхо. Выход: ctrl+a +x
+        
         sudo hwclock -w  //синх-ия часов
         
         cat /proc/driver/rtc  // должны появится строки rtc_time и rtc_date
@@ -63,9 +67,4 @@ Interface options - I2C - ON
         cat /proc/driver/rtd
         
         sudo halt
-        
-6. Преобразователь
-
-        minicom -D /dev/ttyS0
-    
-Проверяем эхо. Выход: ctrl+a +x
+      
