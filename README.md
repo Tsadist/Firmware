@@ -31,7 +31,7 @@ Interface options - I2C - ON
     sudo reboot
     ping 192.168.1.21
     ssh pi@192.168.1.21
-    sudo i2detect -y 1
+    sudo i2cdetect -y 1
     sudo hwclock -r
     
 4. Прошивка
