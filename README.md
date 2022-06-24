@@ -54,9 +54,9 @@ Interface options - I2C - ON
         
         F^C flash13
         
-        cat /proc/driver/rtc
-        
         sudo hwclock -w  //синх-ия
+        
+        cat /proc/driver/rtc
         
         sudo sh -c "echo 0 > /sys/class/rtc/rtc0/wakealarm"  //очистка будильника
         
