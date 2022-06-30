@@ -29,7 +29,7 @@
         - 3 ключа управления питанием камеры
         - ключ управления коммутатором
         - ключ управления вентилятором
-        -
+        
 4.1 Мезонинная плата "Мезонин Uno" (1 симочная) для "Умный двор" (Smart gate)
 
         - модем с супервизором на основе sim7600
@@ -142,8 +142,38 @@ Interface options - I2C - ON
         minicom -D /dev/ttyUSB2
              AT+CREG?        //Ответ отличный от 0,1 - проблема с sim-картой, антеной и тд.
                 
+7. Проверка многофункционального светодиода         //Спутник
+
+        raspi-gpio set 4 op dh //вкл
+        raspi-gpio set 4 op dl //выкл
         
+8. Проверка пинов    //Умный двор
         
+        // Ключи камеры слева направо. Потухает/гаснет
+        raspi-gpio set 6 op dl //выкл
+        raspi-gpio set 6 op dh //вкл  
+        raspi-gpio set 26 op dl 
+        raspi-gpio set 26 op dh  
+        raspi-gpio set 13 op dl 
+        raspi-gpio set 13 op dh  
         
-       
+        //Ключ вентилятора. Запускается
+        raspi-gpio set 18 op dh //вкл  
+        raspi-gpio set 18 op dl //выкл
+        
+        //Коммутатор. Переключить кабель езернет на Расбери
+        raspi-gpio set 5 op dl //выкл
+        raspi-gpio set 5 op dh //вкл
+        
+        //Сухие контакты. Проверять с мультиметром. Без питания не пищит, с питание пищит. 
+        //Переставлять клемму. Слева напрво
+        raspi-gpio set 16 op dh //вкл  
+        raspi-gpio set 16 op dl //выкл
+        raspi-gpio set 23 op dh //вкл  
+        raspi-gpio set 23 op dl //выкл
+        
+9. JSON модуль
+
+        minicom -D /dev/ttyS0
+                ATI 
       
