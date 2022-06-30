@@ -14,7 +14,7 @@
         - модем с супервизером на основе sim7600
         
 3. Спутник А
-        - ЧРВ "ds1370"
+        - ЧРВ "ds1307"
         - модем с супервизором на основе sim7600
         - многофункциональный светодиод
  
@@ -41,13 +41,13 @@
 
         ssh pi@192.168.1.21
 
-2. Запуск вентилятора
+2. Запуск вентилятора   //Страж
 
         raspi-gpio set 18 op dh //включить вентилятор
  
         raspi-gpio set 18 op dl //выключить вентилятор 
  
- 3. ЧРВ
+ 3. ЧРВ         //Страж, Паркомат, Спутник
  
         sudo hwclock -w
         //через 2-3 секунды
@@ -56,10 +56,11 @@
  Если не работает:
  
     sudo nano /boot/config.txt  
-    //dtverlay=i2c-rtc, mcp7940x, wekup-source
+    //dtverlay=i2c-rtc, mcp7940x, wekup-source //Страж, Паркомат
     
     
-    //dtverlay=i2c-rtc,ds1370   //Спутник
+    //dtverlay=i2c-rtc,ds1307   //Спутник
+    
     //dtparam=i2c_arm=on
     
 Выполнить:
@@ -74,7 +75,7 @@ Interface options - I2C - ON
     sudo i2cdetect -y 1
     sudo hwclock -r
     
-4. Прошивка
+4. Прошивка     //Спутник, Страж солнце, Паркомат
 
         sudo nano /boot/config.txt
         //dtoverlay=gpio-poweroff,active_low="y",gpiopin=6,input,active_delay_ms=0,inactive_delay_ms=0
@@ -86,12 +87,12 @@ Interface options - I2C - ON
         ./flash13 t13pm.hex     //Паркомат
         
         cd /7600                //Спутник
-        ./install.sh
-        ./wan.sh
+        ./install.sh            //Прошивка
+        ./wan.sh                //Подключение к интернету
         
         sudo halt
         
-5. Комплексная проверка
+5. Комплексная проверка         //Страж
 
         ping 192.168.1.21
         
@@ -112,4 +113,12 @@ Interface options - I2C - ON
         cat /proc/driver/rtd
         
         sudo halt
+        
+6. Проверка модема sim7600      //Спутник
+
+        ls /dev/ttyUSB*         //должен показывать от 5-ти выходов
+        minicom -D /dev//ttyUSB2
+                ATI             //выдает пареметры
+                AT+CUSBADB=1    // выдает OK
+                AT+CRESET       //система перезагружается
       
