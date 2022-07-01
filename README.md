@@ -80,7 +80,7 @@ Interface options - I2C - ON
     sudo i2cdetect -y 1
     sudo hwclock -r
     
-4. Прошивка     //Спутник, Страж солнце, Паркомат
+4. Прошивка     //Спутник, Страж солнце, Паркомат, Спутник
 
         sudo nano /boot/config.txt
         //dtoverlay=gpio-poweroff,active_low="y",gpiopin=6,input,active_delay_ms=0,inactive_delay_ms=0
@@ -89,7 +89,8 @@ Interface options - I2C - ON
         // найти id = "linuxpi"; заменить reset 25 на 5; baudrate 400000 на 12000
         
         ./flash13 t13.hex       //Страж солнце
-        ./flash13 t13pm.hex     //Паркомат  
+        ./flash13 t13pm.hex     //Паркомат
+        ./flash smartgate.hex   //Спутник
         sudo halt
         
 5. Комплексная проверка         //Страж
@@ -190,3 +191,5 @@ Interface options - I2C - ON
         ./test_atm              //Запустили файл выполнения проверки. 
                                 //Ответы везде должны быть ОК
                                 //Последний параметр это пароль-706024
+  
+Отправить с телефона на него смс с паролем. Устройство должно перезагрузится
