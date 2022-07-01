@@ -89,11 +89,7 @@ Interface options - I2C - ON
         // найти id = "linuxpi"; заменить reset 25 на 5; baudrate 400000 на 12000
         
         ./flash13 t13.hex       //Страж солнце
-        ./flash13 t13pm.hex     //Паркомат
-        
-  
-        
-        
+        ./flash13 t13pm.hex     //Паркомат  
         sudo halt
         
 5. Комплексная проверка         //Страж
