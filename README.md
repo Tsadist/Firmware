@@ -149,8 +149,8 @@ Interface options - I2C - ON
         // Ключи камеры слева направо. Потухает/гаснет
         raspi-gpio set 6 op dl //выкл
         raspi-gpio set 6 op dh //вкл  
-        raspi-gpio set 26 op dl 
-        raspi-gpio set 26 op dh  
+        raspi-gpio set 13 op dl 
+        raspi-gpio set 13 op dh  
         raspi-gpio set 26 op dl 
         raspi-gpio set 26 op dh  
         
@@ -186,6 +186,11 @@ Interface options - I2C - ON
                 
                 ATH             //Должен сбросить звонок
                 AT+CPOWD=1      //Должен выдать Ready 
+
+10. Прошивка 
+
+                ./flash smartgate.hex
+                sudo halt
                 
 10. Преферийный процессор от meha328p           //Умный двор
         
