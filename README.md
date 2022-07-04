@@ -80,7 +80,7 @@ Interface options - I2C - ON
 1.4. Прошивка
 
         sudo nano /boot/config.txt
-        //dtoverlay=gpio-poweroff,active_low="y",gpiopin=6,input,active_delay_ms=0,inactive_delay_ms=0
+        //dtoverlay=gpio poweroff,active_low="y",gpiopin=6,input,active_delay_ms=0,inactive_delay_ms=0
         
         sudo nano /usr/local/etc/avrdude.conf
         // найти id = "linuxpi"; заменить reset 25 на 5; baudrate 400000 на 12000
