@@ -151,8 +151,8 @@ Interface options - I2C - ON
         raspi-gpio set 6 op dh //вкл  
         raspi-gpio set 26 op dl 
         raspi-gpio set 26 op dh  
-        raspi-gpio set 13 op dl 
-        raspi-gpio set 13 op dh  
+        raspi-gpio set 26 op dl 
+        raspi-gpio set 26 op dh  
         
         //Ключ вентилятора. Запускается
         raspi-gpio set 18 op dh //вкл  
@@ -174,7 +174,7 @@ Interface options - I2C - ON
 Подключить антену к модулю
         minicom -D /dev/ttyS0
                 ATI 
-                AT+IPR=115300   //Установили скорость
+                AT+IPR=115200   //Установили скорость
                 AT&W            //Сохранили в память
                 AT+CREG?        //Зарегестрирован ли модуль. Должно быть 0,1
                 AT+CMGF=1       //Перевод режима обмена смс из кодового режима в текстовый
