@@ -40,19 +40,20 @@
         
 
 
-1. Питание
+1. Мезонинная плата "Страж солнце"
+
+1.1. Питание
 
         ping 192.168.1.21
 
         ssh pi@192.168.1.21
 
-2. Запуск вентилятора   //Страж
+1.2. Запуск вентилятора 
 
         raspi-gpio set 18 op dh //включить вентилятор
- 
         raspi-gpio set 18 op dl //выключить вентилятор 
  
- 3. ЧРВ         //Страж, Паркомат, Спутник
+ 1.3. ЧРВ  
  
         sudo hwclock -w
         //через 2-3 секунды
@@ -60,27 +61,23 @@
  
  Если не работает:
  
-    sudo nano /boot/config.txt  
-    //dtverlay=i2c-rtc, mcp7940x, wekup-source //Страж, Паркомат
-    
-    
-    //dtverlay=i2c-rtc,ds1307   //Спутник
-    
-    //dtparam=i2c_arm=on
+        sudo nano /boot/config.txt  
+        //dtverlay=i2c-rtc, mcp7940x, wekup-source
+        //dtparam=i2c_arm=on
     
 Выполнить:
 
-    sudo raspi-config
+        sudo raspi-config
 
 Interface options - I2C - ON
 
-    sudo reboot
-    ping 192.168.1.21
-    ssh pi@192.168.1.21
-    sudo i2cdetect -y 1
-    sudo hwclock -r
+        sudo reboot
+        ping 192.168.1.21
+        ssh pi@192.168.1.21
+        sudo i2cdetect -y 1
+        sudo hwclock -r
     
-4. Прошивка     //Спутник, Страж солнце, Паркомат, Умный двор
+1.4. Прошивка
 
         sudo nano /boot/config.txt
         //dtoverlay=gpio-poweroff,active_low="y",gpiopin=6,input,active_delay_ms=0,inactive_delay_ms=0
@@ -88,12 +85,11 @@ Interface options - I2C - ON
         sudo nano /usr/local/etc/avrdude.conf
         // найти id = "linuxpi"; заменить reset 25 на 5; baudrate 400000 на 12000
         
-        ./flash13 t13.hex       //Страж солнце
-        ./flash13 t13pm.hex     //Паркомат
+        ./flash13 t13.hex       
         ./flash smartgate.hex   //Умный двор
         sudo halt
         
-5. Комплексная проверка         //Страж
+1.5. Комплексная проверка     
 
         ping 192.168.1.21
         
@@ -115,16 +111,90 @@ Interface options - I2C - ON
         
         sudo halt
         
-6. Проверка модема sim7600      //Спутник
+        
+        
+2. Центральный модуль управления паркоматом
+
+2.1 ЧРВ
+
+        sudo hwclock -w
+        //через 2-3 секунды
+        sudo hwclock -r
+        
+Если не работает проверить:
+ 
+        sudo nano /boot/config.txt  
+        dtverlay=i2c-rtc, mcp7940x, wekup-source
+        dtparam=i2c_arm=on
+    
+Выполнить:
+
+        sudo raspi-config
+
+Interface options - I2C - ON
+
+        sudo reboot
+        ping 192.168.1.21
+        ssh pi@192.168.1.21
+        sudo i2cdetect -y 1
+        sudo hwclock -r
+               
+2.2 Прошивка
+
+        sudo nano /boot/config.txt
+        dtoverlay=gpio-poweroff,active_low="y",gpiopin=6,input,active_delay_ms=0,inactive_delay_ms=0
+        
+        sudo nano /usr/local/etc/avrdude.conf
+         айти id = "linuxpi"; заменить reset 25 на 5; baudrate 400000 на 12000
+        
+        ./flash13 t13pm.hex     
+        sudo halt
+
+
+3. Спутник А (файлы требуемые для выполнения wan.sh: libqmi-utils udhcpc)
+        
+3.1 ЧРВ
+        
+        sudo hwclock -w
+        //через 2-3 секунды
+        sudo hwclock -r
+ 
+ Если не работает проверить:
+        
+        sudo nano /boot/config.txt  
+        dtverlay=i2c-rtc,ds1307
+        dtparam=i2c_arm=on
+    
+Выполнить:
+
+        sudo raspi-config
+
+Interface options - I2C - ON
+
+        sudo reboot
+        ing 192.168.1.21
+        ssh pi@192.168.1.21
+        sudo i2cdetect -y 1
+        sudo hwclock -r      
+ 
+ 3.2 Прошивка 
+
+        sudo nano /boot/config.txt
+        //dtoverlay=gpio-poweroff,active_low="y",gpiopin=6,input,active_delay_ms=0,inactive_delay_ms=0
+        
+        sudo nano /usr/local/etc/avrdude.conf
+        // найти id = "linuxpi"; заменить reset 25 на 5; baudrate 400000 на 12000
+        
+        cd /7600              
+        ./install.sh            
+ 
+3.3. Проверка модема sim7600      
         
          minicom -D /dev/ttyUSB2
                 ATI             //выдает пареметры
                 AT+CUSBADB=1    // выдает OK
                 AT+CRESET       //система перезагружается
 
-
-        cd /7600                //Спутник
-        ./install.sh            //Прошивка
         ./wan.sh                //Подключение к интернету
         // в выводе скрипта идет информация о wwan0 интерфейсе с ip адресом 8,10,12 сети (не 100 и более)
         // для полной проверки мы запускаем 
@@ -134,17 +204,20 @@ Interface options - I2C - ON
 Проверить воткнут ли USB.
 
         ls /dev/ttyUSB*         //должен показывать от 5-ти выходов
+        
 Если USB есть заходим:
 
         minicom -D /dev/ttyUSB2
              AT+CREG?        //Ответ отличный от 0,1 - проблема с sim-картой, антеной и тд.
                 
-7. Проверка многофункционального светодиода         //Спутник
+3.4. Проверка многофункционального светодиода
 
         raspi-gpio set 4 op dh //вкл
         raspi-gpio set 4 op dl //выкл
-        
-8. Проверка пинов    //Умный двор
+      
+4. Мезонинная плата "Мезонин Duo" (2-х симочная) для "Умный двор" (Smart gate)
+
+4.1. Проверка пинов    
         
         // Ключи камеры слева направо. Потухает/гаснет
         raspi-gpio set 6 op dl //выкл
@@ -169,7 +242,7 @@ Interface options - I2C - ON
         raspi-gpio set 23 op dh //вкл  
         raspi-gpio set 23 op dl //выкл
         
-9. GSM модуль          //Умный двор
+4.2 GSM модуль         
 
 Подключить антену к модулю
 
@@ -182,17 +255,17 @@ Interface options - I2C - ON
                 AT&W            //Сохранение данных
                 ATD+7<свой номер телефона>;      //Должен позвонить на телефон
                 
-Перезвонить ему и пока идёт звонок в minicom написать 
+Перезвонить ему и пока идёт звонок в minicom написать:
                 
                 ATH             //Должен сбросить звонок
                 AT+CPOWD=1      //Должен выдать Ready 
 
-10. Прошивка 
+4.3. Прошивка 
 
                 ./flash smartgate.hex
                 sudo halt
                 
-10. Преферийный процессор от meha328p           //Умный двор
+4.4 Преферийный процессор от meha328p           
         
         sudo dtparam spi=on     //Включили spi
         ./test_atm              //Запустили файл выполнения проверки. 
