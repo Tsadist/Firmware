@@ -80,7 +80,7 @@ Interface options - I2C - ON
     sudo i2cdetect -y 1
     sudo hwclock -r
     
-4. Прошивка     //Спутник, Страж солнце, Паркомат, Спутник
+4. Прошивка     //Спутник, Страж солнце, Паркомат, Умный двор
 
         sudo nano /boot/config.txt
         //dtoverlay=gpio-poweroff,active_low="y",gpiopin=6,input,active_delay_ms=0,inactive_delay_ms=0
@@ -90,7 +90,7 @@ Interface options - I2C - ON
         
         ./flash13 t13.hex       //Страж солнце
         ./flash13 t13pm.hex     //Паркомат
-        ./flash smartgate.hex   //Спутник
+        ./flash smartgate.hex   //Умный двор
         sudo halt
         
 5. Комплексная проверка         //Страж
